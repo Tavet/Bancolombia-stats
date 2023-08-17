@@ -29,9 +29,9 @@ def read(file_path):
             tables[current_section].append(line)
 
     # Convert each section back to a CSV-like string and read it into a DataFrame
-    info_cliente = pd.read_csv(io.StringIO('\n'.join(tables['Información Cliente'][1:])))
-    info_general = pd.read_csv(io.StringIO('\n'.join(tables['Información General'][1:])))
-    resumen = pd.read_csv(io.StringIO('\n'.join(tables['Resumen'][1:])))
-    movimientos = pd.read_csv(io.StringIO('\n'.join(tables['Movimientos'][1:])))
+    info_cliente = pd.read_csv(io.StringIO('\n'.join(tables['Información Cliente'][0:])))
+    info_general = pd.read_csv(io.StringIO('\n'.join(tables['Información General'][0:])))
+    resumen = pd.read_csv(io.StringIO('\n'.join(tables['Resumen'][0:])))
+    movimientos = pd.read_csv(io.StringIO('\n'.join(tables['Movimientos'][0:])))
 
     return info_cliente, info_general, resumen, movimientos

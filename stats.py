@@ -25,13 +25,24 @@ def get_file_list():
 def main():
     fileList = get_file_list()
     
+    total = 0
     for file in fileList:
         info_cliente, info_general, resumen, movimientos = statement.read(file)
-        #print(info_cliente)
-        #print(info_general)
-        #print(resumen)
-        print(movimientos[2:3])
+        total += abs(get_total_for(movimientos, 'APORTES EN LINEA'))
 
+    print("\n\nTOTAL: " + str(total))
+
+# Gets the total sum for a given description that matches the movements
+def get_total_for(movimientos, descripcion):
+    movimientos = movimientos.copy()
+    movimientos = movimientos[movimientos['DESCRIPCIÓN'].str.contains(descripcion) == True]
+    movimientos['VALOR'] = movimientos['VALOR'].str.replace(',', '').astype(float).astype(int)
+    if not movimientos.empty:
+        print("*************")
+        print(str(movimientos[['FECHA', 'VALOR']].to_string(index=False)))
+    return movimientos['VALOR'].sum()
+
+    
 
 if __name__ == "__main__":
     main()
